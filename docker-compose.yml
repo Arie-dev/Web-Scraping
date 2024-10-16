@@ -5,7 +5,7 @@ services:
     container_name: minio
     environment:
       MINIO_ROOT_USER: ROOTUSER
-      MINIO_ROOT_PASSWORD: DATAINC
+      MINIO_ROOT_PASSWORD: DATAINCUBATOR
     volumes:
       - ./data:/data
     ports:
