@@ -1,4 +1,8 @@
-## Word Count with MapReduce in Hadoop using `mrjob`
+### Word Count with MapReduce in Hadoop using `mrjob`
+```bash
+pip install mrjob
+```
+
 
 ### Introduction
 
