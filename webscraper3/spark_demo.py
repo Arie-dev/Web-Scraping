@@ -16,12 +16,10 @@ print("SparkSession created successfully")
 
 text_files = []
 
-data_folder = os.path.join(os.getcwd(), 'data')
-for root, dirs, files in os.walk(data_folder):
-    for file in files:
-        if file.endswith(".txt"):
-            text_files.append(os.path.join(root, file))
-
+data_folder = os.path.join(os.getcwd(), 'webscraper3/data')
+text_files = [os.path.join(data_folder, "file1.txt"),
+              os.path.join(data_folder, "file2.txt"),
+              os.path.join(data_folder, "file3.txt")]
 
 
 output_dir = os.path.join(os.getcwd(), "output")
