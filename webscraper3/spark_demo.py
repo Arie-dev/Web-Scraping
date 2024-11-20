@@ -14,11 +14,15 @@ for key, value in os.environ.items():
 
 print("SparkSession created successfully")
 
-data_folder = os.path.join(os.getcwd(), 'data')
+text_files = []
 
-text_files = [os.path.join(data_folder, "file1.txt"),
-              os.path.join(data_folder, "file2.txt"),
-              os.path.join(data_folder, "file3.txt")]
+data_folder = os.path.join(os.getcwd(), 'data')
+for root, dirs, files in os.walk(data_folder):
+    for file in files:
+        if file.endswith(".txt"):
+            text_files.append(os.path.join(root, file))
+
+
 
 output_dir = os.path.join(os.getcwd(), "output")
 
