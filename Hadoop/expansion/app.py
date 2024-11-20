@@ -35,3 +35,6 @@ class MRWordCount(MRJob):
 if __name__ == '__main__':
     # Run the job (this runs the MapReduce process: mapping, shuffling, reducing)
     MRWordCount.run()
+    
+    
+# python app.py input/* --output-dir=output/parts --num-reducers=2
