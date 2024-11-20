@@ -2,7 +2,7 @@ version: "3.8"
 
 # Common configurations for Airflow
 x-airflow-common: &airflow-common
-  build: .
+  build: . # Use this to build the Airflow container from the Dockerfile
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
