@@ -1,0 +1,7 @@
+hello world
+hello Hadoop
+
+
+hello test
+
+test hadoop
