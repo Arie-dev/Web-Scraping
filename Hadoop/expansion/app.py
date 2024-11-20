@@ -1,14 +1,15 @@
 from mrjob.job import MRJob
+import time
 
 class MRWordCount(MRJob):
     # Configure the job to allow multiple reducers (default is 2 reducers)
     def configure_args(self):
-        # Calling the superclass's configure_args method to ensure that any 
-        # built-in arguments are processed
+        """Calling the superclass's configure_args method to ensure that any 
+        built-in arguments are processed."""
         super(MRWordCount, self).configure_args()
         
-        # Add an argument for specifying the number of reducers
-        # This is set to 2 by default (i.e., two reducers will process the data).
+        """Add an argument for specifying the number of reducers
+        This is set to 2 by default (i.e., two reducers will process the data)."""
         self.add_passthru_arg('--num-reducers', type=int, default=2, help='Number of reducers')
     
     # Mapper function
@@ -19,7 +20,7 @@ class MRWordCount(MRJob):
         the occurrence of that word in the line).
         """
         for word in line.split():
-            # Yield each word in lowercase as a key and the value 1 (count for that word)
+            """Yield each word in lowercase as a key and the value 1 (count for that word)"""
             yield (word.lower(), 1)
     
     # Reducer function
@@ -29,12 +30,14 @@ class MRWordCount(MRJob):
         It sums the values (the count of occurrences of each word across all the input lines)
         and yields the word along with the total count.
         """
-        # Sum the values (i.e., occurrences of the word) and yield the word with the total count
+        """Sum the values (i.e., occurrences of the word) and yield the word with the total count"""
         yield (key, sum(values))
 
 if __name__ == '__main__':
-    # Run the job (this runs the MapReduce process: mapping, shuffling, reducing)
+    """Run the job (this runs the MapReduce process: mapping, shuffling, reducing)"""
+    start_time = time.time()  # Record the start time
     MRWordCount.run()
+    end_time = time.time()    # Record the end time
+    print(f"Execution Time: {end_time - start_time:.2f} seconds")
     
-    
-# python app.py input/* --output-dir=output/parts --num-reducers=2
+""" python app.py input/* --output-dir=output/parts --num-reducers=2"""

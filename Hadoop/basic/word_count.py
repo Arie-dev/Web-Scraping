@@ -1,38 +1,32 @@
-# # Introduction to Hadoop and Its Components
-
-# Hadoop is an open-source framework that allows for the distributed processing of large datasets across clusters of computers using simple programming models. It is highly scalable, fault-tolerant, and efficient for storing and processing big data.
-
-# In this notebook, we will explore the key components of Hadoop:
-# - **HDFS (Hadoop Distributed File System)**: The storage system of Hadoop, designed to handle large files by splitting them into blocks and storing them across multiple nodes.
-# - **MapReduce**: A programming model for parallel data processing.
-# - **YARN (Yet Another Resource Negotiator)**: Manages resources in a Hadoop cluster and coordinates the execution of tasks.
-
-
-# # MapReduce Example: Word Count
-
-# MapReduce is the core component of Hadoop for processing large datasets. It works by breaking down tasks into smaller subtasks that can be processed in parallel. The basic MapReduce process includes two phases:
-# 1. **Map phase**: Processes the input data and outputs key-value pairs.
-# 2. **Reduce phase**: Aggregates the intermediate results and outputs the final data.
-
-# Let's implement a basic MapReduce job in Python using the `mrjob` library to count word frequencies in a text.
-
 from mrjob.job import MRJob
 
 class MRWordCount(MRJob):
-    # Mapper function
+    # """Mapper function"""
+    # The mapper function is responsible for processing each input line and
+    # generating key-value pairs. In this case, each word in the line is
+    # paired with the value 1, representing its occurrence.
     def mapper(self, _, line):
+        # Split the line into words and process each word
         for word in line.split():
+            """Yield the word in lowercase as a key and the value 1 (count for that word)"""
+            # Yielding the word as a key and 1 as the count for the word
             yield (word.lower(), 1)
 
-    # Reducer function
+    # """Reducer function"""
+    # The reducer function takes the key-value pairs emitted by the mapper and 
+    # processes them. For each unique word (key), it sums the counts (values)
+    # to get the total occurrences of that word.
     def reducer(self, key, values):
+        """Sum the values (i.e., occurrences of the word) and yield the word with the total count"""
+        # Sum all the occurrences (values) of the word and output the total count
         yield (key, sum(values))
 
 if __name__ == '__main__':
+    
+    # """Run the job (this runs the MapReduce process: mapping, shuffling, reducing)"""
+    # This is where the job is executed. The MRJob framework will handle the 
+    # orchestration of the Map and Reduce phases, managing the distribution 
+    # of tasks, data, and resources.
     MRWordCount.run()
-    
-    
 
-# Hadoop and MapReduce:
-
-# MapReduce in Hadoop is a powerful way to process large amounts of data in parallel. Hadoop's MapReduce system handles distributed computing tasks and ensures that the process scales across multiple machines in a cluster. The mrjob library simplifies this process by allowing you to write MapReduce jobs in Python, which can be executed both locally and on a Hadoop cluster.
+"""py word_count.py input.txt --output-dir=output """
