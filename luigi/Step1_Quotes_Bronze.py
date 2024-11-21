@@ -36,7 +36,7 @@ def quotesBronzeLayer():
             })
 
         current_date = datetime.now().strftime('%Y-%m-%d')
-        object_name = f'quotes/quotes_data_{current_date}.json'
+        object_name = f'luigi/quotes/quotes_data_{current_date}.json'
 
         # Convert books_data to JSON and upload to MinIO
         books_json = json.dumps(quotes_data, indent=4)

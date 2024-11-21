@@ -93,8 +93,8 @@ def process_gold_layer():
     minio_client = get_minio_client()
 
     # Load books and quotes data from the silver bucket
-    books_df = load_parquet_from_minio('silver', 'books_cleaned/')
-    quotes_df = load_parquet_from_minio('silver', 'quotes_cleaned/')
+    books_df = load_parquet_from_minio('silver', 'luigi/books_cleaned/')
+    quotes_df = load_parquet_from_minio('silver', 'luigi/quotes_cleaned/')
 
     # Perform gold-level transformations
     if books_df is not None:
@@ -104,7 +104,7 @@ def process_gold_layer():
             gold_books_data,
             minio_client,
             'gold',
-            f'books/books_data_gold_{datetime.now().strftime("%Y%m%d")}.csv'
+            f'luigi/books/books_data_gold_{datetime.now().strftime("%Y%m%d")}.csv'
         )
 
     if quotes_df is not None:
@@ -114,7 +114,7 @@ def process_gold_layer():
             gold_quotes_data,
             minio_client,
             'gold',
-            f'quotes/quotes_data_gold_{datetime.now().strftime("%Y%m%d")}.csv'
+            f'luigi/quotes/quotes_data_gold_{datetime.now().strftime("%Y%m%d")}.csv'
         )
 
 

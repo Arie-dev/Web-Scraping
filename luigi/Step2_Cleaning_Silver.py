@@ -108,8 +108,8 @@ def process_silver_layer():
     minio_client = get_minio_client()
 
     # Load data from bronze bucket
-    books_data = load_bronze_data('bronze', 'books/')
-    quotes_data = load_bronze_data('bronze', 'quotes/')
+    books_data = load_bronze_data('bronze', 'luigi/books/')
+    quotes_data = load_bronze_data('bronze', 'luigi/quotes/')
 
     if not books_data:
         print("No books data found in bronze layer.")
@@ -123,7 +123,7 @@ def process_silver_layer():
             cleaned_books_data,
             minio_client,
             'silver',
-            f'books_cleaned/books_data_silver_{datetime.now().strftime("%Y%m%d")}.parquet'
+            f'luigi/books_cleaned/books_data_silver_{datetime.now().strftime("%Y%m%d")}.parquet'
         )
 
     if quotes_data:
@@ -132,7 +132,7 @@ def process_silver_layer():
             cleaned_quotes_data,
             minio_client,
             'silver',
-            f'quotes_cleaned/quotes_data_silver_{datetime.now().strftime("%Y%m%d")}.parquet'
+            f'luigi/quotes_cleaned/quotes_data_silver_{datetime.now().strftime("%Y%m%d")}.parquet'
         )
 
 
