@@ -21,6 +21,13 @@ text_files = [os.path.join(data_folder, "file1.txt"),
               os.path.join(data_folder, "file2.txt"),
               os.path.join(data_folder, "file3.txt")]
 
+# data_folder = os.path.join(os.getcwd(), 'webscraper3/data')
+# text_files = []
+
+# for file_name in os.listdir(data_folder):
+#     if file_name.endswith('.txt'):
+#         text_files.append(os.path.join(data_folder, file_name))
+
 
 output_dir = os.path.join(os.getcwd(), "output")
 
@@ -36,7 +43,7 @@ def word_count(file_path):
             print(f"Warning: {file_path} is empty.")
             return None
         
-        words_df = text_file.select(explode(split(lower(text_file['value']), '\s+')).alias('word'))
+        words_df = text_file.select(explode(split(lower(text_file['value']), r'\s+')).alias('word'))
 
         word_counts_df = words_df.groupBy('word').count().orderBy('count', ascending=False)
 
