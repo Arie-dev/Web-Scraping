@@ -169,6 +169,8 @@ services:
       - ./dags:/sources/dags
       - ./logs:/sources/logs
       - ./plugins:/sources/plugins
+
+  # Luigi service
   luigi:
     build:
       context: ./luigi
