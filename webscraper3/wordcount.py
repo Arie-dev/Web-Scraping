@@ -2,12 +2,12 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode, split, lower, col
 import os
 import time
-
-# Suppress Spark logs to avoid clutter
 import logging
 logging.getLogger("py4j").setLevel(logging.ERROR)
 
-# Initialize SparkSession
+# create the sparksession 
+# it is the entry point to use the spark dataframe API
+# the difference here is we tell it to run on all cpu cores available [*]
 spark = SparkSession.builder \
     .master("local[*]") \
     .appName("WordCountSpark") \
@@ -16,14 +16,13 @@ spark = SparkSession.builder \
 # Start timer
 start_time = time.time()
 
-# Define input and output directories
 data_folder = os.path.join(os.getcwd(), 'data')
 output_dir = os.path.join(os.getcwd(), "output")
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-# Read all text files in the data folder
+# we read all the text files in the data folder
 text_files = os.path.join(data_folder, "*.txt")
 text_df = spark.read.text(text_files)
 
