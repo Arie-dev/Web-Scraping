@@ -41,6 +41,12 @@ services:
       - "9000:9000"
       - "9001:9001"
     command: server /data --console-address ":9001"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 
   # PostgreSQL service for Airflow
   postgres:
@@ -163,6 +169,23 @@ services:
       - ./dags:/sources/dags
       - ./logs:/sources/logs
       - ./plugins:/sources/plugins
+
+  # Luigi service
+  luigi:
+    build:
+      context: ./luigi
+    container_name: luigi
+    environment:
+      - MINIO_ENDPOINT=host.docker.internal:9000
+      - MINIO_ACCESS_KEY=ROOTUSER
+      - MINIO_SECRET_KEY=DATAINCUBATOR
+    volumes:
+      - ./luigi:/app
+    ports:
+      - "8082:8082"
+    depends_on:
+      - minio
+    command: ["luigid"]
 
 volumes:
   postgres-db-volume:
