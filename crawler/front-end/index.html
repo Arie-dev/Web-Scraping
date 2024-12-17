@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crawler Statistics</title>
+    <link rel="stylesheet" href="/webjars/picocss/1.5.7/pico.min.css">
+    <script src="/webjars/htmx.org/1.6.1/htmx.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Crawler Statistics</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Response Time (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="link : ${links}">
+                    <td th:text="${link.url}"></td>
+                    <td th:text="${link.title}"></td>
+                    <td th:text="${link.type}"></td>
+                    <td th:text="${link.responseTime}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
